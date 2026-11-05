@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Movement Church</title>
+<meta name="description" content="Give, watch, and find your way around Movement Church in Woodstock, Ontario.">
+<meta name="theme-color" content="#f6f7f5">
+<meta property="og:title" content="Movement Church">
+<meta property="og:description" content="Give, watch, and find your way around Movement Church.">
+<meta property="og:url" content="https://movement.info">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Same tokens as the main Movement site — always light, like the site */
+:root{
+  color-scheme:light;
+  --paper:#f6f7f5;
+  --paper2:#eceee9;
+  --paper3:#e1e4de;
+  --ink:#12161a;
+  --ink2:#535d63;
+  --ink3:#8a9298;
+  --line:#d7dbd5;
+  --teal:#0d8b84;
+  --hot:#ff5a3c;
+  --disp:"Bricolage Grotesque","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --body:"Figtree","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --gut:clamp(20px,5vw,40px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.wrap{
+  max-width:560px;margin-inline:auto;
+  padding:calc(env(safe-area-inset-top,0px) + 18px) var(--gut) calc(env(safe-area-inset-bottom,0px) + 28px);
+  min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;
+}
+
+.kick{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.top-logo{display:flex;align-items:center;gap:10px}
+.top-logo img{width:30px;height:30px;object-fit:contain}
+.top-logo b{font-family:var(--disp);font-size:15px;font-weight:800;letter-spacing:-.02em}
+
+/* hero word with footage inside it */
+.hero{text-align:center;padding-top:clamp(36px,9vw,64px)}
+.word{position:relative;margin-top:12px;line-height:.8}
+.word-layer{
+  display:block;font-family:var(--disp);font-weight:800;
+  font-size:clamp(52px,17.5vw,104px);line-height:.8;letter-spacing:-.045em;text-transform:uppercase;
+  background-size:cover;background-position:center 45%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  transition:opacity 1.1s ease;
+}
+.word-layer + .word-layer{position:absolute;inset:0;opacity:0}
+.word-layer.is-on{opacity:1}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){
+  .word-layer{color:var(--ink);-webkit-text-fill-color:var(--ink);background:none}
+  .word-layer + .word-layer{display:none}
+}
+.hero-sub{color:var(--ink2);font-size:16.5px;line-height:1.55;max-width:34ch;margin:18px auto 0}
+
+/* give — the one big action */
+.btns{margin-top:28px;display:flex;flex-direction:column;gap:12px}
+.give{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  min-height:60px;padding:16px 28px;border-radius:999px;
+  background:var(--hot);color:#fff;border:2px solid var(--hot);
+  font-weight:700;font-size:17px;
+  transition:transform .18s cubic-bezier(.2,.8,.3,1),background .18s ease,border-color .18s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.give:hover{background:var(--ink);border-color:var(--ink);transform:translateY(-2px)}
+.give:active{transform:scale(.98)}
+.give .arr{transition:transform .18s ease}
+.give:hover .arr{transform:translateX(3px)}
+
+/* service times line */
+.when{
+  display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;align-items:center;
+  margin-top:20px;font-size:14.5px;color:var(--ink2);font-weight:500;
+}
+.when b{color:var(--ink);font-weight:700}
+.when .dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex:none}
+
+/* destinations — an editorial index, not stacked boxes */
+.dest{margin-top:clamp(40px,9vw,56px)}
+.dest .kick{display:block;margin-bottom:6px}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.row{
+  display:flex;align-items:center;gap:16px;
+  padding:18px 2px;min-height:68px;border-bottom:1px solid var(--line);
+  -webkit-tap-highlight-color:transparent;
+}
+.row-txt{flex:1;min-width:0}
+.row-t{display:block;font-family:var(--disp);font-weight:700;font-size:21px;letter-spacing:-.025em;line-height:1.15}
+.row-s{display:block;font-size:14.5px;color:var(--ink2);margin-top:3px;line-height:1.4}
+.row-go{
+  flex:none;width:38px;height:38px;border-radius:50%;
+  border:1.5px solid var(--line);display:grid;place-items:center;
+  transition:all .18s ease;
+}
+.row-go svg{width:16px;height:16px}
+.row:hover .row-t{color:var(--teal)}
+.row:hover .row-go{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.row:active .row-go{transform:scale(.92)}
+.row-t{transition:color .15s ease}
+
+/* footer */
+footer{margin-top:auto;padding-top:clamp(44px,10vw,64px)}
+.foot{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding-top:20px;border-top:1px solid var(--line)}
+.foot small{color:var(--ink3);font-size:13.5px;line-height:1.5}
+.socs{display:flex;gap:9px}
+.socs a{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:all .18s ease}
+.socs a:hover{background:var(--teal);border-color:var(--teal);color:#fff}
+.socs svg{width:17px;height:17px;fill:currentColor}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <a class="top-logo" href="https://www.wearemovement.ca/"><img src="assets/logo-black.png" alt=""><b>Movement</b></a>
+    <span class="kick">Woodstock, ON</span>
+  </div>
+
+  <header class="hero">
+    <h1 class="vh">Movement Church</h1>
+    <span class="kick">Everything in one place</span>
+    <div class="word" id="word" aria-hidden="true">
+      <span class="word-layer is-on" style="background-image:url('sun/crowd.jpg')">Movement</span>
+      <span class="word-layer" style="background-image:url('sun/room.jpg')">Movement</span>
+      <span class="word-layer" style="background-image:url('sun/hands.jpg')">Movement</span>
+      <span class="word-layer" style="background-image:url('sun/congregation.jpg')">Movement</span>
+    </div>
+    <p class="hero-sub">Give, watch, and find your next step at Movement Church.</p>
+
+    <!-- GIVE — the main action. Swap the href if you use a different giving link. -->
+    <div class="btns">
+      <a class="give" href="https://www.wearemovement.ca/give">Give to Movement <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <!-- Placeholder orange buttons: replace the label and href="#" for each. -->
+      <a class="give" href="#">Lorem ipsum <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <a class="give" href="#">Dolor sit amet <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <a class="give" href="#">Consectetur <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <a class="give" href="#">Adipiscing elit <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <a class="give" href="#">Sed do eiusmod <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <a class="give" href="#">Tempor incididunt <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <a class="give" href="#">Ut labore <span class="arr" aria-hidden="true">&rarr;</span></a>
+    </div>
+
+    <p class="when">
+      <span class="dot" aria-hidden="true"></span> Sundays <b>9:00 &amp; 11:00 AM</b>
+      <span class="dot" aria-hidden="true"></span> <b>65 Lansdowne Ave</b>
+    </p>
+  </header>
+
+  <section class="dest" aria-labelledby="dest-h">
+    <span class="kick" id="dest-h">Where to next</span>
+    <ul class="list">
+      <!-- Each destination is one <li>. Copy a block to add, delete one to remove. -->
+      <li><a class="row" href="https://www.youtube.com/@MovementChurchCanada/streams">
+        <span class="row-txt"><span class="row-t">Watch live</span><span class="row-s">Sundays at 11:00 AM on YouTube</span></span>
+        <span class="row-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a></li>
+      <li><a class="row" href="https://wearemovement.churchcenter.com/people/forms/989717">
+        <span class="row-txt"><span class="row-t">Plan a visit</span><span class="row-s">Let us know you&rsquo;re coming</span></span>
+        <span class="row-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a></li>
+      <li><a class="row" href="https://wearemovement.churchcenter.com/registrations/events">
+        <span class="row-txt"><span class="row-t">Events</span><span class="row-s">What&rsquo;s coming up and sign-ups</span></span>
+        <span class="row-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a></li>
+      <li><a class="row" href="https://www.wearemovement.ca/">
+        <span class="row-txt"><span class="row-t">Full website</span><span class="row-s">Kids, youth, groups and more</span></span>
+        <span class="row-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <small>&copy; <span id="yr">2026</span> Movement Church<br>Woodstock, Ontario</small>
+      <div class="socs">
+<a href="https://www.instagram.com/movement_church/" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.1A6.7 6.7 0 1 0 18.7 12 6.7 6.7 0 0 0 12 5.3zm0 11A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.9-11.2a1.6 1.6 0 1 1-1.6-1.6 1.6 1.6 0 0 1 1.6 1.6z"/></svg></a>
+      <a href="https://www.facebook.com/MovementChurchWoodstock" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="https://www.youtube.com/@MovementChurchCanada" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5a2.5 2.5 0 0 0-1.8 1.8C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.7 15.1V8.9l6.1 3.1z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<script>
+try{document.getElementById('yr').textContent=new Date().getFullYear()}catch(e){}
+(function(){
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var l=document.querySelectorAll('#word .word-layer'),i=0;
+  if(l.length<2)return;
+  setInterval(function(){l[i].classList.remove('is-on');i=(i+1)%l.length;l[i].classList.add('is-on')},3800);
+})();
+</script>
+</body>
+</html>
