@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Movement Church</title>
 <meta name="description" content="Give, watch, and find your way around Movement Church in Woodstock, Ontario.">
-<meta name="theme-color" content="#f6f7f5">
+<meta name="theme-color" content="#f6f7f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15181c" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <meta property="og:title" content="Movement Church">
 <meta property="og:description" content="Give, watch, and find your way around Movement Church.">
 <meta property="og:url" content="https://movement.info">
@@ -14,9 +16,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
-/* Same tokens as the main Movement site — always light, like the site */
+/* Same tokens as the main Movement site — light by default, dark when the device is (see DARK MODE below) */
 :root{
-  color-scheme:light;
+  color-scheme:light dark;
+  --on-accent:#fff;        /* text on --teal / --hot backgrounds */
   --paper:#f6f7f5;
   --paper2:#eceee9;
   --paper3:#e1e4de;
@@ -83,7 +86,7 @@ img{max-width:100%;display:block}
 .give{
   display:flex;align-items:center;justify-content:center;gap:10px;
   min-height:60px;padding:16px 28px;border-radius:999px;
-  background:var(--hot);color:#fff;border:2px solid var(--hot);
+  background:var(--hot);color:var(--on-accent);border:2px solid var(--hot);
   font-weight:700;font-size:17px;
   transition:transform .18s cubic-bezier(.2,.8,.3,1),background .18s ease,border-color .18s ease;
   -webkit-tap-highlight-color:transparent;
@@ -130,7 +133,7 @@ footer{margin-top:auto;padding-top:clamp(44px,10vw,64px)}
 .foot small{color:var(--ink3);font-size:13.5px;line-height:1.5}
 .socs{display:flex;gap:9px}
 .socs a{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:all .18s ease}
-.socs a:hover{background:var(--teal);border-color:var(--teal);color:#fff}
+.socs a:hover{background:var(--teal);border-color:var(--teal);color:var(--on-accent)}
 .socs svg{width:17px;height:17px;fill:currentColor}
 
 /* desktop — wider column, giant word, actions and destinations side by side */
@@ -163,6 +166,23 @@ footer{margin-top:auto;padding-top:clamp(44px,10vw,64px)}
   .row-s{font-size:clamp(14.5px,1vw,18px)}
   .row-go{width:clamp(38px,2.6vw,48px);height:clamp(38px,2.6vw,48px)}
   .foot small{font-size:clamp(13.5px,.9vw,16px)}
+}
+
+/* DARK MODE — follows the visitor's device setting, same palette as the main Movement site */
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#15181c;--paper2:#1d2126;--paper3:#262b31;
+    --ink:#eef0ec;--ink2:#b9c0c5;--ink3:#9aa3a9;--line:#30363d;
+    --teal:#14b7ad;--hot:#ff7c5c;--on-accent:#12161a;
+  }
+  /* black logo turns white */
+  .top-logo img{filter:invert(1)}
+  /* brighter photos inside the big word so it reads on the dark page
+     (!important beats the light-mode photos set inline in the HTML) */
+  .word-layer:nth-child(1){background-image:url('sun/word-light-1.webp')!important}
+  .word-layer:nth-child(2){background-image:url('sun/word-light-2.webp')!important}
+  .word-layer:nth-child(3){background-image:url('sun/word-light-3.webp')!important}
+  .word-layer:nth-child(4){background-image:url('sun/word-light-4.webp')!important}
 }
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
