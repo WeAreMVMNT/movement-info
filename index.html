@@ -97,6 +97,16 @@ img{max-width:100%;display:block}
 .give:active{transform:scale(.98)}
 .give .arr{transition:transform .18s ease}
 .give:hover .arr{transform:translateX(3px)}
+/* Christmas — the red pill with a twinkling green star, same as the nav link on wearemovement.ca */
+:root{--x-red:#b3141c;--x-cream:#fff4e0;--x-green:#1f7a3a;--x-green-lt:#7fe08f}
+.give.xmas{
+  background:var(--x-red);border-color:var(--x-red);color:var(--x-cream);
+  box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--x-green-lt) 55%,transparent),0 10px 24px -10px rgba(179,20,28,.8);
+}
+.give.xmas:hover{background:var(--x-green);border-color:var(--x-green);color:#fff}
+.xmas-star{width:18px;height:18px;fill:var(--x-green-lt);flex:none;animation:xmasTwinkle 2.6s ease-in-out infinite}
+.give.xmas:hover .xmas-star{fill:var(--x-cream)}
+@keyframes xmasTwinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.25) rotate(45deg)}}
 .give[aria-expanded="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .give[aria-expanded="true"] .arr{transform:rotate(90deg)}
 
@@ -187,6 +197,7 @@ footer{margin-top:auto;padding-top:clamp(44px,10vw,64px)}
   /* rows are spaced with bottom margins so the closed Give panel takes up no space */
   .btns{row-gap:0;margin-bottom:calc(-1 * var(--bgap))}
   .btns > .give{margin-bottom:var(--bgap)}
+  .give.xmas{grid-column:1 / -1}   /* full width across the top */
   .give-opts{grid-column:1 / -1;margin-top:0}   /* opens as a full-width row under Give + Connect */
   .opts{padding:0 0 var(--bgap)}
   .opt{padding:16px 20px}
@@ -247,6 +258,8 @@ footer{margin-top:auto;padding-top:clamp(44px,10vw,64px)}
 
     <!-- GIVE — the main action. Swap the href if you use a different giving link. -->
     <div class="btns">
+      <!-- CHRISTMAS — hides itself after Dec 27, 2026 (see the script at the bottom). Delete this line to remove it sooner. -->
+      <a class="give xmas" id="xmas-btn" href="https://wearemovement.ca/christmas.html"><svg class="xmas-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C12.9 7.6 16.4 11.1 24 12 16.4 12.9 12.9 16.4 12 24 11.1 16.4 7.6 12.9 0 12 7.6 11.1 11.1 7.6 12 0Z"/></svg>Christmas at Movement <span class="arr" aria-hidden="true">&rarr;</span></a>
       <button class="give" type="button" id="give-btn" aria-expanded="false" aria-controls="give-opts">Give to Movement <span class="arr" aria-hidden="true">&rarr;</span></button>
       <!-- The three ways to give that open under the Give button -->
       <div class="give-opts" id="give-opts">
@@ -326,6 +339,11 @@ footer{margin-top:auto;padding-top:clamp(44px,10vw,64px)}
 </div>
 <script>
 try{document.getElementById('yr').textContent=new Date().getFullYear()}catch(e){}
+// Christmas button disappears after Dec 27, 2026 (months count from 0, so 11 = December)
+(function(){
+  var x=document.getElementById('xmas-btn');
+  if(x&&new Date()>new Date(2026,11,27,23,59))x.remove();
+})();
 // Give button opens/closes the three ways to give (without JS they simply stay open)
 (function(){
   var btn=document.getElementById('give-btn'),opts=document.getElementById('give-opts');
