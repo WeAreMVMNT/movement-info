@@ -107,6 +107,16 @@ img{max-width:100%;display:block}
 .xmas-star{width:18px;height:18px;fill:var(--x-green-lt);flex:none;animation:xmasTwinkle 2.6s ease-in-out infinite}
 .give.xmas:hover .xmas-star{fill:var(--x-cream)}
 @keyframes xmasTwinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.25) rotate(45deg)}}
+/* Revival Night — blue pill with lime-green text and a flickering flame, same as the nav link on wearemovement.ca */
+:root{--r-blue:#30549e;--r-sky:#a2bfeb;--r-green:#d9f1b7;--r-ink:#12161a}
+.give.rev{
+  background:var(--r-blue);border-color:var(--r-blue);color:var(--r-green);
+  box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--r-sky) 70%,transparent),0 10px 24px -10px rgba(48,84,158,.9);
+}
+.give.rev:hover{background:var(--r-green);border-color:var(--r-green);color:var(--r-ink)}
+.rev-icon{width:18px;height:18px;fill:currentColor;flex:none;transform-origin:50% 90%;animation:revFlicker 1.8s ease-in-out infinite}
+@keyframes revFlicker{0%,100%{transform:scale(1) rotate(0)}30%{transform:scale(1.12,1.2) rotate(-4deg)}60%{transform:scale(.95,1.05) rotate(3deg)}}
+.give .rev-when{font-weight:600;opacity:.85}
 .give[aria-expanded="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .give[aria-expanded="true"] .arr{transform:rotate(90deg)}
 
@@ -197,7 +207,7 @@ footer{margin-top:auto;padding-top:clamp(44px,10vw,64px)}
   /* rows are spaced with bottom margins so the closed Give panel takes up no space */
   .btns{row-gap:0;margin-bottom:calc(-1 * var(--bgap))}
   .btns > .give{margin-bottom:var(--bgap)}
-  .give.xmas{grid-column:1 / -1}   /* full width across the top */
+  .give.xmas,.give.rev{grid-column:1 / -1}   /* full width across the top */
   .give-opts{grid-column:1 / -1;margin-top:0}   /* opens as a full-width row under Give + Connect */
   .opts{padding:0 0 var(--bgap)}
   .opt{padding:16px 20px}
@@ -258,6 +268,8 @@ footer{margin-top:auto;padding-top:clamp(44px,10vw,64px)}
 
     <!-- GIVE — the main action. Swap the href if you use a different giving link. -->
     <div class="btns">
+      <!-- REVIVAL NIGHT — hides itself at midnight after the event (Nov 30, 2026), when wearemovement.ca switches its Revival page over to Christmas. -->
+      <a class="give rev" id="rev-btn" href="https://wearemovement.ca/revival.html"><svg class="rev-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 3.4 3 5.2 4.6 7.4 1.4 1.9 2.4 3.9 2.4 6.3A7 7 0 0 1 12 22.5a7 7 0 0 1-7-7.3c0-2.6 1.3-4.6 2.9-6.2.2 1.9 1 3.1 2.3 3.8-.3-4.2 1-7.8 1.8-11.3Z"/></svg>Revival Night <span class="rev-when">&middot; Nov 29, 6pm</span> <span class="arr" aria-hidden="true">&rarr;</span></a>
       <!-- CHRISTMAS — hides itself after Dec 27, 2026 (see the script at the bottom). Delete this line to remove it sooner. -->
       <a class="give xmas" id="xmas-btn" href="https://wearemovement.ca/christmas.html"><svg class="xmas-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C12.9 7.6 16.4 11.1 24 12 16.4 12.9 12.9 16.4 12 24 11.1 16.4 7.6 12.9 0 12 7.6 11.1 11.1 7.6 12 0Z"/></svg>Christmas at Movement <span class="arr" aria-hidden="true">&rarr;</span></a>
       <button class="give" type="button" id="give-btn" aria-expanded="false" aria-controls="give-opts">Give to Movement <span class="arr" aria-hidden="true">&rarr;</span></button>
@@ -339,6 +351,11 @@ footer{margin-top:auto;padding-top:clamp(44px,10vw,64px)}
 </div>
 <script>
 try{document.getElementById('yr').textContent=new Date().getFullYear()}catch(e){}
+// Revival Night button disappears at midnight Eastern after the event
+(function(){
+  var r=document.getElementById('rev-btn');
+  try{if(r&&Date.now()>=Date.parse('2026-11-30T00:00:00-05:00'))r.remove()}catch(e){}
+})();
 // Christmas button disappears after Dec 27, 2026 (months count from 0, so 11 = December)
 (function(){
   var x=document.getElementById('xmas-btn');
